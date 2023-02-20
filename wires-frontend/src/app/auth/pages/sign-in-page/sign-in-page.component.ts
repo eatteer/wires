@@ -8,7 +8,7 @@ import { NonNullableFormBuilder, Validators } from '@angular/forms';
 })
 export class SignInPageComponent {
   public form = this.fb.group({
-    email: ['', [Validators.required]],
+    email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]],
     rememberMe: [false, []],
   });

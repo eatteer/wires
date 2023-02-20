@@ -1,40 +1,53 @@
 <div class="wr-radial-background wr-page-container-for-centered-element">
-  <div class="wr-card my-4">
-    <h2 class="mb-4 text-4xl font-bold">Sign in</h2>
-    <form [formGroup]="form">
-      <div class="space-y-4 mb-8">
-        <div>
-          <label class="block mb-2">Email</label>
-          <input
-            formControlName="email"
-            pInputText
-            type="text"
-            class="w-full"
-          />
+  <div class="card w-full max-w-lg bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h2 class="card-title mb-4 text-4xl font-bold">Sign in</h2>
+      <form [formGroup]="form">
+        <div class="space-y-4 mb-8">
+          <div class="form-control">
+            <label for="email" class="label">
+              <span class="label-text">Email</span>
+            </label>
+            <input
+              id="email"
+              formControlName="email"
+              type="text"
+              class="input input-bordered"
+            />
+          </div>
+          <div class="form-control">
+            <label for="passaword" class="label">
+              <span class="label-text">Password</span>
+            </label>
+            <input
+              id="passaword"
+              formControlName="password"
+              type="password"
+              class="input input-bordered"
+            />
+          </div>
+          <div class="form-control">
+            <label class="label cursor-pointer justify-start gap-2">
+              <input
+                formControlName="rememberMe"
+                type="checkbox"
+                class="checkbox checkbox-primary"
+              />
+              <span>Remember me</span>
+            </label>
+          </div>
         </div>
-        <div>
-          <label class="block mb-2">Password</label>
-          <input
-            pInputText
-            formControlName="password"
-            type="password"
-            class="w-full"
-          />
-        </div>
-        <div class="flex gap-2">
-          <p-checkbox
-            [formControl]="form.controls.rememberMe"
-            [binary]="true"
-          ></p-checkbox>
-          <label>Remember me</label>
-        </div>
-      </div>
-      <button
-        pButton
-        label="Sign in"
-        [disabled]="form.invalid"
-        class="w-full"
-      ></button>
-    </form>
+        <button
+          [disabled]="form.invalid"
+          class="btn btn-block btn-primary gap-2 mb-4"
+        >
+          <i class="fa-solid fa-right-to-bracket"></i>
+          Sign in
+        </button>
+      </form>
+      <a routerLink="/auth/sign-up" class="text-center text-primary font-bold">
+        Don't you have an account? Sign up
+      </a>
+    </div>
   </div>
 </div>

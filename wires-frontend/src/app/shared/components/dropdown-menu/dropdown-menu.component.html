@@ -1,0 +1,39 @@
+<div class="dropdown dropdown-end">
+  <label tabindex="0" class="btn btn-outline btn-primary btn-circle">
+    <i class="fa-solid fa-bars"></i>
+  </label>
+  <ul
+    tabindex="0"
+    class="dropdown-content menu w-80 space-y-1 mt-5 p-2 rounded-box bg-base-100 shadow"
+  >
+    <h2 class="p-4 text-2xl font-bold">Debviluke</h2>
+    <li>
+      <a
+        routerLink="/wires"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <i class="fa-solid fa-inbox"></i>
+        <span>Messages</span>
+      </a>
+    </li>
+    <li>
+      <label for="create-message-modal-checkbox">
+        <i class="fa-solid fa-paper-plane"></i>
+        <span>Create message</span>
+      </label>
+    </li>
+    <li>
+      <a routerLink="/wires/my-messages" routerLinkActive="active">
+        <i class="fa-solid fa-message"></i>
+        <span>My messages</span>
+      </a>
+    </li>
+    <li>
+      <a>
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Logout</span>
+      </a>
+    </li>
+  </ul>
+</div>

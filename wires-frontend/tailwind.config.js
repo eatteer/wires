@@ -1,9 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  important: true,
   content: ["./src/**/*.{html,ts}"],
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require("daisyui"), require("tailwind-scrollbar-hide")],
 };
