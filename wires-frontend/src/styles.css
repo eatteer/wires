@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  @apply flex flex-col min-h-screen h-full;
+}
+
+body,
+app-root {
+  @apply flex-1;
+}
+
+.wr-radial-background {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f4f6f9;
+  background-image: radial-gradient(#0049ff, transparent 1px),
+    radial-gradient(#0049ff, transparent 1px);
+  background-position: 0 0, 25px 25px;
+  background-size: 50px 50px;
+}
+
+.wr-page-container-for-centered-element {
+  @apply w-full h-full md:flex md:justify-center md:items-center;
+}
+
+.wr-card {
+  @apply w-full max-w-lg p-8 bg-white md:border md:border-slate-200 md:rounded-lg md:shadow-lg;
+}

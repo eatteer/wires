@@ -1,0 +1,40 @@
+<div class="wr-radial-background wr-page-container-for-centered-element">
+  <div class="wr-card my-4">
+    <h2 class="mb-4 text-4xl font-bold">Sign in</h2>
+    <form [formGroup]="form">
+      <div class="space-y-4 mb-8">
+        <div>
+          <label class="block mb-2">Email</label>
+          <input
+            formControlName="email"
+            pInputText
+            type="text"
+            class="w-full"
+          />
+        </div>
+        <div>
+          <label class="block mb-2">Password</label>
+          <input
+            pInputText
+            formControlName="password"
+            type="password"
+            class="w-full"
+          />
+        </div>
+        <div class="flex gap-2">
+          <p-checkbox
+            [formControl]="form.controls.rememberMe"
+            [binary]="true"
+          ></p-checkbox>
+          <label>Remember me</label>
+        </div>
+      </div>
+      <button
+        pButton
+        label="Sign in"
+        [disabled]="form.invalid"
+        class="w-full"
+      ></button>
+    </form>
+  </div>
+</div>
