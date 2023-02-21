@@ -41,4 +41,8 @@ export class CreateMessageComponent implements AfterViewInit {
       )
       .subscribe();
   }
+
+  public clearControls(): void {
+    this.form.reset();
+  }
 }
