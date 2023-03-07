@@ -2,15 +2,15 @@
   <div class="card w-full max-w-lg bg-base-100 shadow-xl">
     <div class="card-body">
       <h2 class="card-title mb-4 text-4xl font-bold">Sign in</h2>
-      <form [formGroup]="form">
+      <form [formGroup]="form" (ngSubmit)="submit()">
         <div class="space-y-4 mb-8">
           <div class="form-control">
-            <label for="email" class="label">
-              <span class="label-text">Email</span>
+            <label for="username" class="label">
+              <span class="label-text">Username</span>
             </label>
             <input
-              id="email"
-              formControlName="email"
+              id="username"
+              formControlName="username"
               type="text"
               class="input input-bordered"
             />
