@@ -100,6 +100,14 @@ export class AuthService {
     throw new BadRequestException('User already exists');
   }
 
+  public async refresh(userId: string) {
+    // Receive userId
+    // Find user by id
+    const user = await this.userRepository.findOneBy({ id: userId });
+    // Create JWT
+    return this.createJwt(user);
+  }
+
   private async hashPassword(password: string): Promise<string> {
     return await bcrypt.hash(password, 10);
   }
