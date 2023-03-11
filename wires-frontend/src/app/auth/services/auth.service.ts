@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { SignInCredentials, Auth } from '../interfaces/auth.interface';
@@ -12,7 +13,7 @@ export class AuthService {
 
   public auth$ = this.authSubject$.asObservable();
 
-  public constructor(private httpClient: HttpClient) {}
+  public constructor(private httpClient: HttpClient, private router: Router) {}
 
   public signIn(credentials: SignInCredentials): Observable<Auth> {
     const endpoint = `${environment.API_BASE_URL}/auth/signin`;
@@ -26,7 +27,16 @@ export class AuthService {
     );
   }
 
+  public logout(): void {
+    this.removeAuthFromLocalStorage();
+    this.router.navigate(['/auth/sign-in']);
+  }
+
   private saveAuthInLocalStorage(auth: Auth): void {
     localStorage.setItem('access_token', auth.access_token);
+  }
+
+  private removeAuthFromLocalStorage(): void {
+    localStorage.removeItem('access_token');
   }
 }

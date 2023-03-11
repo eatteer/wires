@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
   selector: 'app-dropdown-menu',
@@ -6,10 +7,16 @@ import { Component } from '@angular/core';
   styles: [],
 })
 export class DropdownMenuComponent {
+  public constructor(private authService: AuthService) {}
+
   public openCreateMessageModal(): void {
     const checkbox = document.getElementById(
       'create-message-modal-checkbox'
     ) as HTMLInputElement;
     checkbox.checked = true;
+  }
+
+  public logout(): void {
+    this.authService.logout();
   }
 }
