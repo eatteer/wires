@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { User } from '.';
 
-@Entity({ name: 'message' })
+@Entity({ name: 'messages' })
 export class Message {
   @PrimaryGeneratedColumn({
     type: 'bigint',
