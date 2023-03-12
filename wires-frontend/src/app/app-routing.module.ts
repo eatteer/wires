@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './auth/guards/auth.guard';
 
 const routes: Routes = [
   {
     path: 'wires',
     loadChildren: () =>
       import('./wires/wires.module').then((m) => m.WiresModule),
+    canMatch: [AuthGuard],
   },
   {
     path: 'auth',
