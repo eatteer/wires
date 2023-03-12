@@ -3,9 +3,23 @@ export interface SignInCredentials {
   password: string;
 }
 
+export interface SignUpCredentials {
+  username: string;
+  fullname: string;
+  email: string;
+  password: string;
+}
+
 export interface Auth {
   access_token: string;
   expires_in: string;
   message: string;
   status: boolean;
+}
+
+export interface User {
+  id: string;
+  username: string;
+  email: string;
+  fullname: string;
 }

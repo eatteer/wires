@@ -4,7 +4,12 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AccessTokenError } from '../errors/access-token.error';
-import { SignInCredentials, Auth } from '../interfaces/auth.interface';
+import {
+  SignInCredentials,
+  Auth,
+  SignUpCredentials,
+  User,
+} from '../interfaces/auth.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -22,11 +27,16 @@ export class AuthService {
     return this.httpClient.post<Auth>(endpoint, credentials).pipe(
       tap((auth) => {
         // Save access token in local storage
-        // and update auth state
+        // and update auth state.
         this.saveAccessToken(auth);
         this.authSubject$.next(auth);
       })
     );
+  }
+
+  public signUp(credentials: SignUpCredentials): Observable<User> {
+    const endpoint = `${environment.API_BASE_URL}/auth/signup`;
+    return this.httpClient.post<User>(endpoint, credentials);
   }
 
   public logout(): void {
@@ -41,13 +51,13 @@ export class AuthService {
     const observable$ = new Observable<Auth>((subscriber) => {
       let token;
       try {
-        // Read access token from local storage
+        // Read access token from local storage.
         token = this.getAccessToken();
       } catch (error) {
         console.error(error);
         throw error;
       }
-      // Send token to API
+      // Send token to API.
       const endpoint = `${environment.API_BASE_URL}/auth/refresh`;
       const authorization = `Bearer ${token}`;
       const headers = new HttpHeaders().set('Authorization', authorization);
@@ -67,16 +77,16 @@ export class AuthService {
   }
 
   private saveAccessToken(auth: Auth): void {
-    localStorage.setItem('access_token', auth.access_token);
+    localStorage.setItem(this.ACCESS_TOKEN_KEY, auth.access_token);
   }
 
   private removeAccessToken(): void {
-    localStorage.removeItem('access_token');
+    localStorage.removeItem(this.ACCESS_TOKEN_KEY);
   }
 
   /**
    * Try to get access token from local storage.
-   * If do not exists throw an error.
+   * If does not exist throw an error.
    */
   private getAccessToken(): string {
     const token = localStorage.getItem(this.ACCESS_TOKEN_KEY);

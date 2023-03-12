@@ -2,7 +2,7 @@
   <div class="card w-full max-w-lg my-4 bg-base-100 shadow-xl">
     <div class="card-body">
       <h2 class="card-title mb-4 text-4xl font-bold">Sign up</h2>
-      <form [formGroup]="form">
+      <form [formGroup]="form" (ngSubmit)="submit()">
         <div class="space-y-4 mb-8">
           <div class="form-control">
             <label for="username" class="label">
