@@ -59,6 +59,9 @@ export class MessagesService {
             id: find.user,
           },
         },
+        relations: {
+          user: true,
+        },
       });
     } catch (error) {
       throw new BadRequestException(`${error.driverError}`);

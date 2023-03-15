@@ -6,7 +6,7 @@
 <label for="create-message-modal-checkbox" class="modal cursor-pointer">
   <label class="modal-box relative">
     <h2 class="wr-page-title mb-4">Create</h2>
-    <form [formGroup]="form">
+    <form [formGroup]="form" (ngSubmit)="submit()">
       <div class="space-y-4 mb-8">
         <div class="form-group">
           <label for="title" class="label">

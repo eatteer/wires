@@ -8,6 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { WiresPageComponent } from './pages/wires-page/wires-page.component';
 import { MyMessagesPageComponent } from './pages/my-messages-page/my-messages-page.component';
 import { CreateMessageComponent } from './components/create-message/create-message.component';
+import { MessageComponent } from './components/message/message.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { CreateMessageComponent } from './components/create-message/create-messa
     WiresPageComponent,
     MyMessagesPageComponent,
     CreateMessageComponent,
+    MessageComponent,
   ],
   imports: [
     CommonModule,

@@ -1,1 +1,13 @@
-<h1 class="wr-page-title">My messages</h1>
+<h1 class="wr-page-title mb-8">My messages</h1>
+<div
+  *ngIf="messages.length > 0; else noMessages"
+  class="grid grid-cols-1 gap-4 md:grid-cols-2"
+>
+  <app-message
+    *ngFor="let message of messages"
+    [message]="message"
+  ></app-message>
+</div>
+<ng-template #noMessages>
+  <p>There are no messages</p>
+</ng-template>

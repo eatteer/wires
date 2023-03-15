@@ -1,6 +1,7 @@
 import { Component, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { tap } from 'rxjs';
+import { WiresService } from '../../service/wires.service';
 
 @Component({
   selector: 'app-create-message',
@@ -16,7 +17,10 @@ export class CreateMessageComponent implements AfterViewInit {
     message: ['', [Validators.required]],
   });
 
-  public constructor(private fb: NonNullableFormBuilder) {}
+  public constructor(
+    private fb: NonNullableFormBuilder,
+    private wiresService: WiresService
+  ) {}
 
   // TODO: Paint special characters in red
   public ngAfterViewInit(): void {
@@ -35,5 +39,12 @@ export class CreateMessageComponent implements AfterViewInit {
 
   public clearControls(): void {
     this.form.reset();
+  }
+
+  public submit(): void {
+    const { title, message } = this.form.getRawValue();
+    this.wiresService.createMessage({ title, text: message }).subscribe((_) => {
+      alert('Message created');
+    });
   }
 }

@@ -28,8 +28,7 @@ export class AuthService {
       tap((auth) => {
         // Save access token in local storage
         // and update auth state.
-        this.saveAccessToken(auth);
-        this.authSubject$.next(auth);
+        this.configureAuth(auth);
       })
     );
   }
@@ -62,8 +61,9 @@ export class AuthService {
       const authorization = `Bearer ${token}`;
       const headers = new HttpHeaders().set('Authorization', authorization);
       this.httpClient.get<Auth>(endpoint, { headers }).subscribe({
-        next: (value) => {
-          subscriber.next(value);
+        next: (auth) => {
+          this.configureAuth(auth);
+          subscriber.next(auth);
         },
         error: (error) => {
           subscriber.error(error);
@@ -74,6 +74,11 @@ export class AuthService {
       });
     });
     return observable$;
+  }
+
+  private configureAuth(auth: Auth): void {
+    this.saveAccessToken(auth);
+    this.authSubject$.next(auth);
   }
 
   private saveAccessToken(auth: Auth): void {

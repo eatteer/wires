@@ -1,23 +1,14 @@
 <h1 class="wr-page-title mb-8">Messages</h1>
-<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-  <div
+<div
+  *ngIf="messages.length > 0; else noMessages"
+  noMessages
+  class="grid grid-cols-1 gap-4 md:grid-cols-2"
+>
+  <app-message
     *ngFor="let message of messages"
-    class="card bg-base-content text-primary-content shadow-lg"
-  >
-    <div class="card-body">
-      <h3 class="text-lg font-bold">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit
-      </h3>
-      <p class="text-sm mb-2">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Suscipit
-        corrupti, repellendus enim quam cum eum ad voluptatibus eius ipsam
-        itaque. Officiis, commodi eveniet nostrum perferendis quidem fugit iste
-        consequatur? Itaque!
-      </p>
-      <div class="flex justify-between items-center">
-        <p class="text-sm">10:25 am 20/11/22</p>
-        <h3 class="text-xl font-bold">Debviluke</h3>
-      </div>
-    </div>
-  </div>
+    [message]="message"
+  ></app-message>
 </div>
+<ng-template #noMessages>
+  <p>There are no messages</p>
+</ng-template>
