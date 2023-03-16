@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { environment } from 'src/environments/environment';
 import { CreateMessageDto, Message } from '../interfaces/wires.interface';
@@ -9,6 +9,9 @@ import { CreateMessageDto, Message } from '../interfaces/wires.interface';
   providedIn: 'root',
 })
 export class WiresService {
+  private messageCreationSubject$ = new Subject<void>();
+  public messageCreation$ = this.messageCreationSubject$.asObservable();
+
   private authorizationHeader = '';
 
   public constructor(
@@ -18,6 +21,10 @@ export class WiresService {
     this.authService.auth$.subscribe((auth) => {
       this.authorizationHeader = `Bearer ${auth!.access_token}`;
     });
+  }
+
+  public notifyMessageCreation(): void {
+    this.messageCreationSubject$.next();
   }
 
   public getAllMessages(): Observable<Message[]> {

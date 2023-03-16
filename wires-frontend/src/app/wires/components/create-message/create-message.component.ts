@@ -1,5 +1,6 @@
 import { Component, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { tap } from 'rxjs';
 import { WiresService } from '../../service/wires.service';
 
@@ -45,6 +46,8 @@ export class CreateMessageComponent implements AfterViewInit {
     const { title, message } = this.form.getRawValue();
     this.wiresService.createMessage({ title, text: message }).subscribe((_) => {
       alert('Message created');
+      this.wiresService.notifyMessageCreation();
+      this.clearControls();
     });
   }
 }
