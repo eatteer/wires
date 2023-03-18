@@ -4,14 +4,18 @@ import { AuthGuard } from './auth/guards/auth.guard';
 
 const routes: Routes = [
   {
-    path: 'wires',
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+  },
+  {
+    path: '',
     loadChildren: () =>
       import('./wires/wires.module').then((m) => m.WiresModule),
     canMatch: [AuthGuard],
   },
   {
-    path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+    path: '',
+    loadChildren: () => import('./root/root.module').then((m) => m.RootModule),
   },
 ];
 

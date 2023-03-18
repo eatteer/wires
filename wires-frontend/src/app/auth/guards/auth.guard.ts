@@ -23,7 +23,7 @@ export class AuthGuard implements CanMatch {
     return this.authService.refresh().pipe(
       map((_) => true),
       catchError((_) => {
-        this.router.navigate(['/auth/sign-in']);
+        // this.router.navigate(['/auth/sign-in']);
         return of(false);
       })
     );

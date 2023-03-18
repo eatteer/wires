@@ -28,7 +28,7 @@ export class SignInPageComponent {
     this.authService.signIn({ username, password }).subscribe({
       next: (_) => {
         // User could be authenticated
-        this.router.navigate(['/wires']);
+        this.router.navigate(['/']);
       },
       error: (httpErrorResponse: any) => {
         // User could not be authenticated
