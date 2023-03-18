@@ -1,4 +1,10 @@
-import { Component, AfterViewInit, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  AfterViewInit,
+  ViewEncapsulation,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { tap } from 'rxjs';
@@ -11,6 +17,9 @@ import { WiresService } from '../../services/wires.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class CreateMessageComponent implements AfterViewInit {
+  @ViewChild('modalToggle')
+  public modalCheckboxRef!: ElementRef<HTMLInputElement>;
+
   public regex: RegExp = /^(\w|\s)+$/;
 
   public form = this.fb.group({
@@ -48,6 +57,13 @@ export class CreateMessageComponent implements AfterViewInit {
       alert('Message created');
       this.wiresService.notifyMessageCreation();
       this.clearControls();
+      this.closeModal();
     });
+  }
+
+  private closeModal(): void {
+    const checkbox = this.modalCheckboxRef.nativeElement;
+    const checked = checkbox.checked;
+    checkbox.checked != checked;
   }
 }
