@@ -2,7 +2,7 @@ import { Component, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { tap } from 'rxjs';
-import { WiresService } from '../../service/wires.service';
+import { WiresService } from '../../services/wires.service';
 
 @Component({
   selector: 'app-create-message',

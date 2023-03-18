@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Message } from '../../interfaces/wires.interface';
-import { WiresService } from '../../service/wires.service';
+import { WiresService } from '../../services/wires.service';
 
 @Component({
   selector: 'app-home-page',
