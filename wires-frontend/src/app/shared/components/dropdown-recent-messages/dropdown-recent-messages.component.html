@@ -1,6 +1,8 @@
 <div class="dropdown dropdown-end">
   <div class="indicator">
-    <span class="indicator-item indicator-start badge badge-primary">0</span>
+    <span class="indicator-item indicator-start badge badge-primary">
+      {{ messagesCount$ | async }}
+    </span>
     <label tabindex="0" class="btn btn-outline btn-primary btn-circle">
       <i class="fa-solid fa-message"></i>
     </label>
@@ -11,21 +13,20 @@
     class="dropdown-content menu w-80 space-y-1 mt-5 p-2 rounded-box bg-base-100 shadow"
   >
     <h2 class="p-4 text-2xl font-bold">Recent messages</h2>
-    <li>
-      <a>
-        <div>
-          <h3 class="font-bold">Lorem title</h3>
-          <p>Lorem description</p>
-        </div>
-      </a>
-    </li>
-    <li>
-      <a>
-        <div>
-          <h3 class="font-bold">Lorem title</h3>
-          <p>Lorem description</p>
-        </div>
-      </a>
-    </li>
+    <ng-container *ngIf="messages$ | async as messages">
+      <ng-container *ngIf="messages.length > 0; else noMessages">
+        <li *ngFor="let message of messages">
+          <a>
+            <div>
+              <h3 class="font-bold">{{ message.title }}</h3>
+              <p>{{ message.text }}</p>
+            </div>
+          </a>
+        </li>
+      </ng-container>
+    </ng-container>
+    <ng-template #noMessages>
+      <p class="p-4">There are no items</p>
+    </ng-template>
   </ul>
 </div>

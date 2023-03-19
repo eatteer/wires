@@ -2,6 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { SessionMessageService } from 'src/app/wires/services/session-message.service';
+import { WiresService } from 'src/app/wires/services/wires.service';
 import { environment } from 'src/environments/environment';
 import { AccessTokenError } from '../errors/access-token.error';
 import {
@@ -20,7 +22,11 @@ export class AuthService {
   private authSubject$ = new BehaviorSubject<Auth | undefined>(undefined);
   public auth$ = this.authSubject$.asObservable();
 
-  public constructor(private httpClient: HttpClient, private router: Router) {}
+  public constructor(
+    private httpClient: HttpClient,
+    private router: Router,
+    private sessionMessagesService: SessionMessageService
+  ) {}
 
   public signIn(credentials: SignInCredentials): Observable<Auth> {
     const endpoint = `${environment.API_BASE_URL}/auth/signin`;
@@ -41,6 +47,7 @@ export class AuthService {
   public logout(): void {
     this.removeAccessToken();
     this.router.navigate(['/auth/sign-in']);
+    this.sessionMessagesService.cleanMessages();
   }
 
   /**
