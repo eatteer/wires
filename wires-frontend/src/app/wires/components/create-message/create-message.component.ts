@@ -64,6 +64,6 @@ export class CreateMessageComponent implements AfterViewInit {
   private closeModal(): void {
     const checkbox = this.modalCheckboxRef.nativeElement;
     const checked = checkbox.checked;
-    checkbox.checked != checked;
+    checkbox.checked = !checked;
   }
 }
