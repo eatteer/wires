@@ -96,14 +96,12 @@ export class MessagesService {
       .innerJoinAndSelect('message.user', 'user');
 
     if (search) {
-      console.log('search');
       queryBuilder.andWhere('message.title like :search', {
         search: `%${search}%`,
       });
     }
 
     if (date) {
-      console.log('date');
       queryBuilder.andWhere('message.createdAt = :date', { date });
     }
 
