@@ -24,15 +24,19 @@ export class MyMessagesPageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(subscription);
   }
 
-  public ngOnDestroy(): void {
-    this.subscriptions.forEach((subscription) => {
-      subscription.unsubscribe();
-    });
-  }
-
   private getMyMessages(): void {
     this.wiresService.getMyMessages().subscribe((messages) => {
       this.messages = messages;
+    });
+  }
+
+  public getMessages(messages: Message[]): void {
+    this.messages = messages;
+  }
+
+  public ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => {
+      subscription.unsubscribe();
     });
   }
 }

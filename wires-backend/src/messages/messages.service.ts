@@ -89,11 +89,15 @@ export class MessagesService {
   }
 
   async findFilterMessage(findMessage: FindMessageDto): Promise<Message[]> {
-    const { date, search } = findMessage;
+    const { date, search, userId } = findMessage;
 
     const queryBuilder = this.messageRepository
       .createQueryBuilder('message')
       .innerJoinAndSelect('message.user', 'user');
+
+    if (userId) {
+      queryBuilder.andWhere('user.id = :userId', { userId });
+    }
 
     if (search) {
       queryBuilder.andWhere('message.title like :search', {

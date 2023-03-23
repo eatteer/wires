@@ -1,4 +1,7 @@
 <h1 class="wr-page-title mb-8">My messages</h1>
+<app-search-my-messages-form
+  (onSubmit)="getMessages($event)"
+></app-search-my-messages-form>
 <div
   *ngIf="messages.length > 0; else noMessages"
   class="grid grid-cols-1 gap-4 md:grid-cols-2"

@@ -6,7 +6,9 @@
     tabindex="0"
     class="dropdown-content menu w-80 space-y-1 mt-5 p-2 rounded-box bg-base-100 shadow"
   >
-    <h2 class="p-4 text-2xl font-bold">Debviluke</h2>
+    <h2 *ngIf="auth$ | async as auth" class="p-4 text-2xl font-bold">
+      {{ auth.username }}
+    </h2>
     <li>
       <a
         routerLink="/"

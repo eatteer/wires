@@ -7,6 +7,8 @@ import { AuthService } from 'src/app/auth/services/auth.service';
   styles: [],
 })
 export class DropdownMenuComponent {
+  public auth$ = this.authService.auth$;
+
   public constructor(private authService: AuthService) {}
 
   public openCreateMessageModal(): void {

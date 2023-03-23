@@ -10,6 +10,7 @@ import { MyMessagesPageComponent } from './pages/my-messages-page/my-messages-pa
 import { CreateMessageComponent } from './components/create-message/create-message.component';
 import { MessageComponent } from './components/message/message.component';
 import { SearchMessagesFormComponent } from './components/search-messages-form/search-messages-form.component';
+import { SearchMyMessagesFormComponent } from './components/search-my-messages-form/search-my-messages-form.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { SearchMessagesFormComponent } from './components/search-messages-form/s
     CreateMessageComponent,
     MessageComponent,
     SearchMessagesFormComponent,
+    SearchMyMessagesFormComponent,
   ],
   imports: [
     CommonModule,

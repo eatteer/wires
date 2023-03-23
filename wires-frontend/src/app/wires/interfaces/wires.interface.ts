@@ -23,6 +23,7 @@ export interface CreateMessageDto {
 }
 
 export interface MessagesFilters {
-  search: string;
-  date: string;
+  search?: string;
+  date?: string;
+  userId?: string;
 }

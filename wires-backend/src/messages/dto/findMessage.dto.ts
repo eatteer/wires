@@ -10,4 +10,7 @@ export class FindMessageDto {
 
   @IsOptional()
   user?: string;
+
+  @IsOptional()
+  userId?: string;
 }

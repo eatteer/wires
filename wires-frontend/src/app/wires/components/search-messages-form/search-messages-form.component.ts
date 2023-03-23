@@ -79,7 +79,6 @@ export class SearchMessagesFormComponent implements OnInit {
   }
 
   public submit(filters: MessagesFilters): Observable<Message[]> {
-    console.log('REQUESTING');
     return this.wiresService.getFilteredMessages(filters);
   }
 }

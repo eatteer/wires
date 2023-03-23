@@ -15,6 +15,8 @@ export interface Auth {
   expires_in: string;
   message: string;
   status: boolean;
+  userId: string;
+  username: string;
 }
 
 export interface User {

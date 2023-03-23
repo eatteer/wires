@@ -68,6 +68,8 @@ export class AuthService {
       expires_in: this.configService.get('JWT_EXPIRES_IN'),
       message: 'Successfully logged in',
       status: true,
+      userId: user.id,
+      username: user.username,
     };
   }
 
