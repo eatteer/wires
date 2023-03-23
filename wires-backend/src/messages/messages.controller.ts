@@ -40,7 +40,7 @@ export class MessagesController {
     return this.messagesService.findOwnerAll(findMessage);
   }
 
-  @Get('find')
+  @Post('find')
   findFilterMessages(@Body() findMessage: FindMessageDto): Promise<Message[]> {
     return this.messagesService.findFilterMessage(findMessage);
   }

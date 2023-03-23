@@ -93,11 +93,10 @@ export class MessagesService {
       where: [
         {
           title: ILike(`%${search}%`),
-        },
-        {
           createdAt: date,
         },
       ],
+      relations: { user: true },
     });
 
     if (!res.length) throw new NotFoundException();

@@ -3,7 +3,11 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject, tap } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { environment } from 'src/environments/environment';
-import { CreateMessageDto, Message } from '../interfaces/wires.interface';
+import {
+  CreateMessageDto,
+  Message,
+  MessagesFilters,
+} from '../interfaces/wires.interface';
 import { SessionMessageService } from './session-message.service';
 
 @Injectable({
@@ -36,6 +40,15 @@ export class WiresService {
     );
     const endpoint = `${environment.API_BASE_URL}/messages`;
     return this.httpClient.get<Message[]>(endpoint, { headers });
+  }
+
+  public getFilteredMessages(filters: MessagesFilters): Observable<Message[]> {
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      this.authorizationHeader
+    );
+    const endpoint = `${environment.API_BASE_URL}/messages/find`;
+    return this.httpClient.post<Message[]>(endpoint, filters, { headers });
   }
 
   public getMyMessages(): Observable<Message[]> {

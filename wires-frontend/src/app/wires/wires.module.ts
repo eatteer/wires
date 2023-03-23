@@ -9,6 +9,7 @@ import { WiresPageComponent } from './pages/wires-page/wires-page.component';
 import { MyMessagesPageComponent } from './pages/my-messages-page/my-messages-page.component';
 import { CreateMessageComponent } from './components/create-message/create-message.component';
 import { MessageComponent } from './components/message/message.component';
+import { SearchMessagesFormComponent } from './components/search-messages-form/search-messages-form.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { MessageComponent } from './components/message/message.component';
     MyMessagesPageComponent,
     CreateMessageComponent,
     MessageComponent,
+    SearchMessagesFormComponent,
   ],
   imports: [
     CommonModule,

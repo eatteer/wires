@@ -21,3 +21,8 @@ export interface CreateMessageDto {
   title: string;
   text: string;
 }
+
+export interface MessagesFilters {
+  search: string;
+  date: string;
+}

@@ -1,0 +1,21 @@
+<form [formGroup]="form">
+  <div class="form-control mb-4">
+    <label for="search" class="label">Search</label>
+    <input
+      id="search"
+      type="text"
+      class="input input-bordered"
+      formControlName="search"
+    />
+  </div>
+  <div class="form-control">
+    <label for="date" class="label">Date</label>
+    <input
+      id="date"
+      type="date"
+      class="input input-bordered w-full mb-8"
+      formControlName="date"
+    />
+  </div>
+</form>
+<!-- <pre>{{ form.value | json }}</pre> -->

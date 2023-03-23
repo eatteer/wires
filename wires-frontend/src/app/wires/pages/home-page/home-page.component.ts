@@ -35,4 +35,8 @@ export class HomePageComponent implements OnInit, OnDestroy {
       this.messages = messages;
     });
   }
+
+  public listFilteredMessages(messages: Message[]): void {
+    this.messages = messages;
+  }
 }
