@@ -10,6 +10,7 @@ import { CreateMessageDto } from './dto/createMessage.dto';
 import { FindMessageDto } from './dto/findMessage.dto';
 import { commentDto } from './dto/comment.dto';
 import { equals } from 'class-validator';
+import { User } from 'src/database';
 
 @Injectable()
 export class MessagesService {
@@ -89,18 +90,38 @@ export class MessagesService {
 
   async findFilterMessage(findMessage: FindMessageDto): Promise<Message[]> {
     const { date, search } = findMessage;
-    const res = await this.messageRepository.find({
-      where: [
-        {
-          title: ILike(`%${search}%`),
-          createdAt: date,
-        },
-      ],
-      relations: { user: true },
-    });
 
-    if (!res.length) throw new NotFoundException();
-    return res;
+    const queryBuilder = this.messageRepository
+      .createQueryBuilder('message')
+      .innerJoinAndSelect('message.user', 'user');
+
+    if (search) {
+      console.log('search');
+      queryBuilder.andWhere('message.title like :search', {
+        search: `%${search}%`,
+      });
+    }
+
+    if (date) {
+      console.log('date');
+      queryBuilder.andWhere('message.createdAt = :date', { date });
+    }
+
+    const messages = queryBuilder.getMany();
+    return messages;
+
+    // const res = await this.messageRepository.find({
+    //   where: [
+    //     {
+    //       title: ILike(`%${search}%`),
+    //       createdAt: date,
+    //     },
+    //   ],
+    //   relations: { user: true },
+    // });
+
+    // if (!res.length) throw new NotFoundException();
+    // return res;
   }
 
   async createComment(id: number, comment: commentDto): Promise<Message> {

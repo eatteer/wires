@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, tap } from 'rxjs';
+import { Observable, of, Subject, tap, catchError } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { environment } from 'src/environments/environment';
 import {
@@ -48,7 +48,9 @@ export class WiresService {
       this.authorizationHeader
     );
     const endpoint = `${environment.API_BASE_URL}/messages/find`;
-    return this.httpClient.post<Message[]>(endpoint, filters, { headers });
+    return this.httpClient
+      .post<Message[]>(endpoint, filters, { headers })
+      .pipe(catchError((_) => of<Message[]>([])));
   }
 
   public getMyMessages(): Observable<Message[]> {

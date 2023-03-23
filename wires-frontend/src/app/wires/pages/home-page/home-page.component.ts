@@ -24,19 +24,19 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(subscription);
   }
 
-  public ngOnDestroy(): void {
-    this.subscriptions.forEach((subscription) => {
-      subscription.unsubscribe();
-    });
-  }
-
   private getAllMessages(): void {
     this.wiresService.getAllMessages().subscribe((messages) => {
       this.messages = messages;
     });
   }
 
-  public listFilteredMessages(messages: Message[]): void {
+  public getMessages(messages: Message[]): void {
     this.messages = messages;
+  }
+
+  public ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => {
+      subscription.unsubscribe();
+    });
   }
 }

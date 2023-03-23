@@ -1,6 +1,14 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NonNullableFormBuilder } from '@angular/forms';
-import { combineLatest, debounceTime, map, Observable, switchMap } from 'rxjs';
+import {
+  combineLatest,
+  debounceTime,
+  map,
+  Observable,
+  skip,
+  startWith,
+  switchMap,
+} from 'rxjs';
 import { Message, MessagesFilters } from '../../interfaces/wires.interface';
 import { WiresService } from '../../services/wires.service';
 
@@ -24,20 +32,9 @@ export class SearchMessagesFormComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    const onChangeSearch$ = this.searchControl.valueChanges.pipe(
-      debounceTime(500)
-    );
-    const onChangeDate$ = this.dateControl.valueChanges;
-    combineLatest([onChangeSearch$, onChangeDate$])
-      .pipe(
-        map(([search, date]) => ({ search, date })),
-        switchMap((filters) => this.submit(filters))
-      )
-      .subscribe((messages) => this.onSubmit.emit(messages));
-  }
-
-  public submit(filters: MessagesFilters): Observable<Message[]> {
-    return this.wiresService.getFilteredMessages(filters);
+    this.requestMessagesOnControlsChanges().subscribe((messages) => {
+      this.onSubmit.emit(messages);
+    });
   }
 
   public get searchControl() {
@@ -48,12 +45,41 @@ export class SearchMessagesFormComponent implements OnInit {
     return this.form.controls.date;
   }
 
-  private getFormattedCurrentDate(): string {
-    const currentDate = new Date();
-    const year = currentDate.getFullYear();
-    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-    const day = String(currentDate.getDate()).padStart(2, '0');
-    const formattedDate = `${year}-${month}-${day}`;
-    return formattedDate;
+  /**
+   * Combine the latest values emitted by search and date valueChanges observables.
+   *
+   * Initialize the combineLatest observables
+   *  - onChangeSearch$
+   *  - onChangeDate$
+   *
+   * to emit an empty string since at some point in the future the user can
+   * fill just one control, and since the mentioned observables have emittited
+   * at least the empty string, the combineLatest observable can emit for example:
+   *
+   * ['lemillion´, '']
+   * ['', '2023/03/23']
+   */
+  private requestMessagesOnControlsChanges(): Observable<Message[]> {
+    const onChangeSearch$ = this.searchControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(500)
+    );
+    const onChangeDate$ = this.dateControl.valueChanges.pipe(startWith(''));
+
+    return combineLatest([onChangeSearch$, onChangeDate$]).pipe(
+      /**
+       * Skip the first emission = ['', ''],
+       * so the home page can fetch the initial messages
+       * and form changes can fetch the filtered messages.
+       */
+      skip(1),
+      map(([search, date]) => ({ search, date })),
+      switchMap((filters) => this.submit(filters))
+    );
+  }
+
+  public submit(filters: MessagesFilters): Observable<Message[]> {
+    console.log('REQUESTING');
+    return this.wiresService.getFilteredMessages(filters);
   }
 }

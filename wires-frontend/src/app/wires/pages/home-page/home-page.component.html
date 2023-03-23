@@ -1,6 +1,6 @@
 <h1 class="wr-page-title mb-8">Messages</h1>
 <app-search-messages-form
-  (onSubmit)="listFilteredMessages($event)"
+  (onSubmit)="getMessages($event)"
 ></app-search-messages-form>
 <div
   *ngIf="messages.length > 0; else noMessages"
