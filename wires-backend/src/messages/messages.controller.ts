@@ -42,7 +42,6 @@ export class MessagesController {
 
   @Post('find')
   findFilterMessages(@Body() findMessage: FindMessageDto): Promise<Message[]> {
-    console.log(findMessage);
     return this.messagesService.findFilterMessage(findMessage);
   }
 
