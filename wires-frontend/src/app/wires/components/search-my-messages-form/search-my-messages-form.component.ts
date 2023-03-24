@@ -14,7 +14,7 @@ import { WiresService } from '../../services/wires.service';
 @Component({
   selector: 'app-search-my-messages-form',
   templateUrl: './search-my-messages-form.component.html',
-  styleUrls: ['./search-my-messages-form.component.css'],
+  styles: [],
 })
 export class SearchMyMessagesFormComponent implements OnInit, OnDestroy {
   @Output()
@@ -39,13 +39,20 @@ export class SearchMyMessagesFormComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.date.valueChanges
-      .pipe(switchMap((date) => this.submit({ date, userId: this.userId })))
-      .subscribe((messages) => this.onSubmit.next(messages));
+    this.getFilteredMessagesOnDateChanges().subscribe((messages) =>
+      this.onSubmit.next(messages)
+    );
   }
 
-  public get date() {
+  public get dateControl() {
     return this.form.controls.date;
+  }
+
+  private getFilteredMessagesOnDateChanges(): Observable<Message[]> {
+    const onDateChanges$ = this.dateControl.valueChanges;
+    return onDateChanges$.pipe(
+      switchMap((date) => this.submit({ date, userId: this.userId }))
+    );
   }
 
   private submit(filters: MessagesFilters): Observable<Message[]> {

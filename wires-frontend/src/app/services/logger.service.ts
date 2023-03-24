@@ -9,6 +9,7 @@ export class LoggerService {
   public debug(message: any): void {
     console.log('DEBUG:', message);
   }
+
   public error(message: any): void {
     console.error('ERROR:', message);
   }

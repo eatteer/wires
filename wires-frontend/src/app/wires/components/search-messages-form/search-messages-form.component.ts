@@ -1,4 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { NonNullableFormBuilder } from '@angular/forms';
 import {
   combineLatest,
@@ -7,6 +13,7 @@ import {
   Observable,
   skip,
   startWith,
+  Subscription,
   switchMap,
 } from 'rxjs';
 import { Message, MessagesFilters } from '../../interfaces/wires.interface';
@@ -15,11 +22,13 @@ import { WiresService } from '../../services/wires.service';
 @Component({
   selector: 'app-search-messages-form',
   templateUrl: './search-messages-form.component.html',
-  styleUrls: ['./search-messages-form.component.css'],
+  styles: [],
 })
 export class SearchMessagesFormComponent implements OnInit {
   @Output()
   public onSubmit: EventEmitter<Message[]> = new EventEmitter();
+
+  public subscriptions: Subscription[] = [];
 
   public form = this.fb.group({
     search: [''],
@@ -32,9 +41,12 @@ export class SearchMessagesFormComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.requestMessagesOnControlsChanges().subscribe((messages) => {
-      this.onSubmit.emit(messages);
-    });
+    const subscription = this.getFilteredMessagesOnControlsChanges().subscribe(
+      (messages) => {
+        this.onSubmit.emit(messages);
+      }
+    );
+    this.subscriptions.push(subscription);
   }
 
   public get searchControl() {
@@ -49,8 +61,8 @@ export class SearchMessagesFormComponent implements OnInit {
    * Combine the latest values emitted by search and date valueChanges observables.
    *
    * Initialize the combineLatest observables
-   *  - onChangeSearch$
-   *  - onChangeDate$
+   *  - onSearchChanges$
+   *  - onDateChanges$
    *
    * to emit an empty string since at some point in the future the user can
    * fill just one control, and since the mentioned observables have emittited
@@ -59,14 +71,14 @@ export class SearchMessagesFormComponent implements OnInit {
    * ['lemillion´, '']
    * ['', '2023/03/23']
    */
-  private requestMessagesOnControlsChanges(): Observable<Message[]> {
-    const onChangeSearch$ = this.searchControl.valueChanges.pipe(
+  private getFilteredMessagesOnControlsChanges(): Observable<Message[]> {
+    const onSearchChanges$ = this.searchControl.valueChanges.pipe(
       startWith(''),
       debounceTime(500)
     );
-    const onChangeDate$ = this.dateControl.valueChanges.pipe(startWith(''));
+    const onDateChanges$ = this.dateControl.valueChanges.pipe(startWith(''));
 
-    return combineLatest([onChangeSearch$, onChangeDate$]).pipe(
+    return combineLatest([onSearchChanges$, onDateChanges$]).pipe(
       /**
        * Skip the first emission = ['', ''],
        * so the home page can fetch the initial messages
@@ -80,5 +92,11 @@ export class SearchMessagesFormComponent implements OnInit {
 
   public submit(filters: MessagesFilters): Observable<Message[]> {
     return this.wiresService.getFilteredMessages(filters);
+  }
+
+  public ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => {
+      subscription.unsubscribe();
+    });
   }
 }

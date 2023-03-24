@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject, tap, catchError, filter } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { LoggerService } from 'src/app/services/logger.service';
 import { environment } from 'src/environments/environment';
 import {
   CreateMessageDto,
@@ -21,6 +22,7 @@ export class WiresService {
 
   public constructor(
     private httpClient: HttpClient,
+    private loggerService: LoggerService,
     private authService: AuthService,
     private sessionMessagesService: SessionMessageService
   ) {
@@ -39,7 +41,7 @@ export class WiresService {
       this.authorizationHeader
     );
     const endpoint = `${environment.API_BASE_URL}/messages`;
-    console.log('getAllMessages');
+    this.loggerService.debug('getAllMessages');
     return this.httpClient.get<Message[]>(endpoint, { headers });
   }
 
@@ -49,7 +51,7 @@ export class WiresService {
       this.authorizationHeader
     );
     const endpoint = `${environment.API_BASE_URL}/messages/find`;
-    console.log('getFilteredMessages');
+    this.loggerService.debug('getFilteredMessages');
     return this.httpClient
       .post<Message[]>(endpoint, filters, { headers })
       .pipe(catchError((_) => of<Message[]>([])));
@@ -61,7 +63,7 @@ export class WiresService {
       this.authorizationHeader
     );
     const endpoint = `${environment.API_BASE_URL}/messages/me`;
-    console.log('getMyMessages');
+    this.loggerService.debug('getMyMessages');
     return this.httpClient.get<Message[]>(endpoint, { headers });
   }
 
@@ -73,7 +75,7 @@ export class WiresService {
       this.authorizationHeader
     );
     const endpoint = `${environment.API_BASE_URL}/messages`;
-    console.log('createMessage');
+    this.loggerService.debug('createMessage');
     return this.httpClient
       .post<Message>(endpoint, createMessageDto, {
         headers,
