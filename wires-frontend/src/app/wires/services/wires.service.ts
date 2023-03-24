@@ -39,6 +39,7 @@ export class WiresService {
       this.authorizationHeader
     );
     const endpoint = `${environment.API_BASE_URL}/messages`;
+    console.log('getAllMessages');
     return this.httpClient.get<Message[]>(endpoint, { headers });
   }
 
@@ -48,6 +49,7 @@ export class WiresService {
       this.authorizationHeader
     );
     const endpoint = `${environment.API_BASE_URL}/messages/find`;
+    console.log('getFilteredMessages');
     return this.httpClient
       .post<Message[]>(endpoint, filters, { headers })
       .pipe(catchError((_) => of<Message[]>([])));
@@ -59,6 +61,7 @@ export class WiresService {
       this.authorizationHeader
     );
     const endpoint = `${environment.API_BASE_URL}/messages/me`;
+    console.log('getMyMessages');
     return this.httpClient.get<Message[]>(endpoint, { headers });
   }
 
@@ -70,6 +73,7 @@ export class WiresService {
       this.authorizationHeader
     );
     const endpoint = `${environment.API_BASE_URL}/messages`;
+    console.log('createMessage');
     return this.httpClient
       .post<Message>(endpoint, createMessageDto, {
         headers,
